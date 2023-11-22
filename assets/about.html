@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=400, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <style>
+        .card {
+            width: 400;
+            height: 200;
+            position: relative !important;
+            background: linear-gradient(to left, transparent, #fff 70%);
+            overflow: hidden;
+        }
+
+        .bg {
+            position: absolute;
+            z-index: -1;
+            top: -150px;
+            left: 50px;
+            width: 120%;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="px-4 py-3 card">
+        <img class="bg" src="img/about/bg.png">
+        <h2 class="py-2">CANNONBALLERS BOT: 运行中</h2>
+        <h5>开发者: GEEKi</h5>
+        <h6>IIDX 数据库歌曲数量: {{ count }}</h6>
+        <h6 class="mb-3">正在灼热开发中....</h6>
+        <p class="small text-secondary">POWERED BY KOISHI.CHAT & ULTRALIG.HT</p>
+    </div>
+    <script src="js/vue.global.js"></script>
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            setup() {
+                return data;
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

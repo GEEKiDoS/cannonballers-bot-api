@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=500, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <style>
+        body {
+            background-image: url(img/31re_bg_failed.png);
+            background-size: cover;
+        }
+
+        .error-sign {
+            position: relative;
+        }
+
+        .error-sign img {
+            width: 120px;
+        }
+
+        .error-overlay {
+            position: absolute;
+            left: -4px;
+            top: -3px;
+        }
+
+        .error-title {
+            font-weight: bold;
+            text-shadow: none;
+            color: red;
+            margin-top: 20px;
+        }
+
+        .error-detail {
+            text-wrap: wrap;
+        }
+
+        .col {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body data-bs-theme="dark">
+    <script src="js/vue.global.js"></script>
+    <div id="app">
+        <div class="row p-5 m-4">
+            <div class="col-5">
+                <div class="error-sign">
+                    <img src="img/error/landmark_hazard_p02.png">
+                    <img class="error-overlay" src="img/error/landmark_hazard_p02dkb.png">
+                </div>
+            </div>
+            <div class="col">
+                <h3 class="error-title px-0">{{ error }}</h3>
+                <h6 class="error-detail px-0">{{ desc }}</h3>
+            </div>
+        </div>
+        
+       
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            setup() {
+                return data;
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>

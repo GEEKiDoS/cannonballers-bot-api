@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=800, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <style>
+        .card {
+            position: relative !important;
+            overflow: hidden;
+            background-color: rgba(0, 0, 0, 0.5);
+            
+        }
+
+        .bg {
+            position: absolute;
+            z-index: -1;
+            top: 0;
+            left: 0;
+            width: 120%;
+        }
+
+        .version {
+            position: absolute;
+            top: 25px;
+            right: 30px;
+        }
+
+        .diff {
+            position: absolute;
+            width: 28px;
+            top: 135px
+        }
+
+        .diff-sp {
+            background-color: rgba(241, 255, 100, 1);
+            border-radius: 5px;
+            text-shadow: none;
+            color: #000;
+            box-shadow: 0 0 10px rgba(241, 255, 0, 1), 0 0 5px rgba(241, 255, 0, 1), 0 0 2px rgba(241, 255, 0, 1);
+            font-weight: bold;
+        }
+
+        .diff-dp {
+            background-color: transparent;
+            border-radius: 5px;
+            text-shadow: none;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(241, 255, 0, 1), 0 0 5px rgba(241, 255, 0, 1), 0 0 2px rgba(241, 255, 0, 1);
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body data-bs-theme="dark">
+    <script src="js/vue.global.js"></script>
+    <div id="app" class="px-4 py-3 card">
+        <img class="bg" src="img/bg.png">
+        <h3 class="mt-2">{{ title }}</h3>
+        <h5>{{ artist }}</h5>
+        <h6 class="mb-4 text-secondary">{{ genre }}</h6>
+        <img class="version" :src="`img/icons/ver/ssm_${version}.png`" width="158">
+        <!-- <img class="diff" src="img/diff.png"> -->
+        <div class="row text-center">
+            <div class="col-1"></div>
+            <div class="col" v-if="level.sp.beginner != 0">
+                <img src="img/icons/bingo_diff_beginner.png" width="112"> 
+            </div>
+            <div class="col">
+                <img src="img/icons/bingo_diff_normal.png" width="112"> 
+            </div>
+            <div class="col">
+                <img src="img/icons/bingo_diff_hyper.png" width="112"> 
+            </div>
+            <div class="col">
+                <img src="img/icons/bingo_diff_another.png" width="112"> 
+            </div>
+            <div class="col" v-if="level.sp.leggendaria != 0 && level.dp.leggendaria != 0">
+                <img src="img/icons/bingo_diff_leggendaria.png" width="112"> 
+            </div>
+        </div>
+        <div class="row text-center my-3 diff-sp">
+            <div class="col-1">
+                <img src="img/icons/diff_sp.png" width="30" style="transform: rotate(-90deg);"> 
+            </div>
+            <div class="col" v-if="level.sp.beginner != 0">{{ level.sp.beginner }}</div>
+            <div class="col">{{ level.sp.normal }}</div>
+            <div class="col">{{ level.sp.hyper }}</div>
+            <div class="col">{{ level.sp.another }}</div>
+            <div class="col" v-if="level.sp.leggendaria != 0 && level.dp.leggendaria != 0">{{ level.sp.leggendaria == 0 ? 'N/A' : level.sp.leggendaria }}</div>
+        </div>
+        <div class="row text-center my-3 diff-dp">
+            <div class="col-1">
+                <img src="img/icons/diff_dp.png" width="30" style="transform: rotate(-90deg);"> 
+            </div>
+            <div class="col" v-if="level.sp.beginner != 0">N/A</div>
+            <div class="col">{{ level.dp.normal }}</div>
+            <div class="col">{{ level.dp.hyper }}</div>
+            <div class="col">{{ level.dp.another }}</div>
+            <div class="col" v-if="level.sp.leggendaria != 0 && level.dp.leggendaria != 0">{{ level.dp.leggendaria == 0 ? 'N/A' : level.sp.leggendaria }}</div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            setup() {
+                return data;
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>

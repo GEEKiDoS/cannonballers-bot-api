@@ -1,0 +1,9 @@
+html {
+    text-shadow: 0 0 2px #000;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: transparent !important;
+}
