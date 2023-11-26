@@ -55,7 +55,7 @@ namespace BotApi.Services
             }
         }
 
-        public async Task<byte[]> RenderUrl(string url, int width, int height, object? data = null)
+        public async Task<byte[]> RenderUrl(string url, int width, int height, object? data = null, MagickFormat format = MagickFormat.Jpeg)
         {
             var completed = false;
             byte[] result = null!;
@@ -124,11 +124,7 @@ namespace BotApi.Services
                         new PixelReadSettings(width, height, StorageType.Char, PixelMapping.BGRA)
                     );
 
-                    image.Format = MagickFormat.Png24;
-                    image.Settings.SetDefine(MagickFormat.Png, "compression-filter", 5);
-                    image.Settings.SetDefine(MagickFormat.Png, "compression-level", 9);
-                    image.Settings.SetDefine(MagickFormat.Png, "compression-strategy", 1);
-
+                    image.Format = format;
                     result = image.ToByteArray();
                 }
 

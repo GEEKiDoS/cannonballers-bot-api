@@ -1,5 +1,6 @@
-using BotApi.Services;
+ï»¿using BotApi.Services;
 using BotApi.Types;
+using ImageMagick;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 
@@ -31,26 +32,19 @@ builder.Services
 var app = builder
     .Build();
 
+app.Use(async (ctx, next) =>
+{
+    ctx.Response.Headers.CacheControl = $"max-age={24 * 60 * 60}";
+
+    await next();
+});
+
 Task<byte[]> ShowError(ResultRenderer renderer, string error, string desc)
 {
     return renderer.RenderUrl("file:///error.html", 500, 270, new {
         error, desc
     });
 }
-
-// Configure the HTTP request pipeline.
-app.MapGet("/render", async (ctx) =>
-{
-    var renderer = ctx.RequestServices.GetService<ResultRenderer>()!;
-
-    var result = await renderer.RenderUrl("file:///app.html", 800, 600, new
-    {
-        hello = "World",
-    });
-
-    ctx.Response.ContentType = "image/png";
-    await ctx.Response.Body.WriteAsync(result);
-});
 
 app.MapGet("/song/{id}.png", async (string id, ResultRenderer renderer, IMongoDatabase db, HttpContext ctx) =>
 {
@@ -62,15 +56,15 @@ app.MapGet("/song/{id}.png", async (string id, ResultRenderer renderer, IMongoDa
     {
         var result = await renderer.RenderUrl("file:///song.html", 852, 293, song);
 
-        ctx.Response.ContentType = "image/png";
+        ctx.Response.ContentType = "image/jpeg";
         await ctx.Response.Body.WriteAsync(result);
 
         return;
     }
 
-    ctx.Response.ContentType = "image/png";
+    ctx.Response.ContentType = "image/jpeg";
     await ctx.Response.Body.WriteAsync(
-        await ShowError(renderer, "Î´ÕÒµ½¸èÇú", $"Êı¾İ¿âÖĞ²»´æÔÚ ID Îª {id} µÄ¸èÇú")
+        await ShowError(renderer, "æœªæ‰¾åˆ°æ­Œæ›²", $"æ•°æ®åº“ä¸­ä¸å­˜åœ¨ ID ä¸º {id} çš„æ­Œæ›²")
     );
 });
 
@@ -92,7 +86,7 @@ app.MapGet("/s/{keyword}/r.png", async (string keyword, ResultRenderer renderer,
         results = songs,
     });
 
-    ctx.Response.ContentType = "image/png";
+    ctx.Response.ContentType = "image/jpeg";
     await ctx.Response.Body.WriteAsync(result);
 });
 
@@ -103,7 +97,7 @@ app.MapGet("/about.png", async (ResultRenderer renderer, IMongoDatabase db, Http
     var result = await renderer.RenderUrl("file:///about.html", 420, 220, new
     {
         count
-    });
+    }, MagickFormat.Png);
 
     ctx.Response.ContentType = "image/png";
     await ctx.Response.Body.WriteAsync(result);
